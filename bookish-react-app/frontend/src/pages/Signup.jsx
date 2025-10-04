@@ -1,7 +1,7 @@
 import '../styles/global.css';
 import useSignup from '../hooks/useSignup';
 
-const Signup = () => {
+const Signup = ({setIsAuthenticated}) => {
   const {
     form,
     setForm,
@@ -9,7 +9,7 @@ const Signup = () => {
     message,
     generatePassword,
     handleSubmit,
-  } = useSignup();
+  } = useSignup({setIsAuthenticated});
 
   return (
     <div className="signup_home-bg">
@@ -93,55 +93,3 @@ const Signup = () => {
 export default Signup;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//function Signup() {
-// const [message, setMessage] = useState({ text: "", type: "" });
-// const [submitted, setSubmitted] = useState(false);
-
-
-// const [form, setForm] = useState({
-//   username: "",
-//   email: "",
-//   password: "",
-//   confirm: "",
-// });
-
-// // Generate random password
-// const generatePassword = () => {
-//   const chars =
-//     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
-//   let newPassword = "";
-//   for (let i = 0; i < 12; i++) {
-//     newPassword += chars.charAt(Math.floor(Math.random() * chars.length));
-//   }
-//   setForm({ ...form, password: newPassword, confirm: newPassword });
-// };
-
-
-
-// const handleSubmit = (e) => {
-//   e.preventDefault();
-
-//   if (form.password !== form.confirm) {
-//     setMessage({ text: "Passwords do not match!", type: "error" });
-//     return;
-//   }
-
-//   setMessage({ text: `Account created for ${form.username}!`, type: "success" });
-//   setSubmitted(true); // hide form, show message
-// };

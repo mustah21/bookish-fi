@@ -10,6 +10,10 @@ const useSearchBar = ({ onBookAdded, onShelfRefresh } = {}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [addingId, setAddingId] = useState(null);
+  
+  // Auth decleration
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user ? user.token : null;
 
   const applyFilters = useCallback(async () => {
     setLoading(true); setError("");
@@ -21,7 +25,9 @@ const useSearchBar = ({ onBookAdded, onShelfRefresh } = {}) => {
       };
       const res = await fetch(SEARCH_RECS_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", 
+          Authorization: `Bearer ${token}`,
+         },
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error((await res.text()) || `HTTP ${res.status}`);
@@ -33,7 +39,7 @@ const useSearchBar = ({ onBookAdded, onShelfRefresh } = {}) => {
     } finally {
       setLoading(false);
     }
-  }, [filters]);
+  }, [token, filters]);
 
   const clearFilters = useCallback(() => {
     setFilters({ genre: "", yearPublished: "", pageAmount: "" });
@@ -62,7 +68,9 @@ const useSearchBar = ({ onBookAdded, onShelfRefresh } = {}) => {
 
       const res = await fetch("/api/bookshelf", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", 
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(payload),
       });
 
@@ -85,7 +93,7 @@ const useSearchBar = ({ onBookAdded, onShelfRefresh } = {}) => {
     } finally {
       setAddingId(null);
     }
-  }, [onBookAdded, onShelfRefresh]);
+  }, [token, onBookAdded, onShelfRefresh]);
 
   const visibleResults = results.filter((b) =>
     (b.title || "").toLowerCase().includes(search.trim().toLowerCase())

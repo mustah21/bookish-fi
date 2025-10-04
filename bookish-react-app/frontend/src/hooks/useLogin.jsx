@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const useLogin = () => {
+const useLogin = ({setIsAuthenticated} ) => {
 
     const [form, setForm] = useState({ username: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
@@ -9,7 +9,7 @@ const useLogin = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate()
 
-// hello
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,13 +26,15 @@ const useLogin = () => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form),
+
             });
 
             if (!response.ok) {
                 throw new Error("Invalid username or password");
             }
             const user = await response.json();
-            localStorage.setItem("token", user.token);
+            localStorage.setItem("user", JSON.stringify(user));
+            setIsAuthenticated(true);
             navigate('/mainPage')
 
         } catch (err) {

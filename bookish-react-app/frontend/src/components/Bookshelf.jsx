@@ -17,6 +17,11 @@ export default function Bookshelf() {
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
 
+  // Auth decleration
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user ? user.token : null;
+
+
   const [form, setForm] = useState({
     title: "",
     author: "",
@@ -35,7 +40,12 @@ export default function Bookshelf() {
   // ---------- Load shelf ----------
   const refreshShelf = async () => {
     try {
-      const res = await fetch("/api/bookshelf");
+        const res = await fetch("/api/bookshelf", {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        });
       const data = await res.json().catch(() => []);
       if (!res.ok) throw new Error(data?.message || "Load failed");
       setBooks(Array.isArray(data) ? data : []);
@@ -47,7 +57,7 @@ export default function Bookshelf() {
   useEffect(() => {
     refreshShelf();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [token]);
 
   // ---------- Filters ----------
   const normStatus = (s = "") => {
@@ -142,7 +152,9 @@ export default function Bookshelf() {
 
       const res = await fetch("/api/bookshelf", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", 
+            "Authorization": `Bearer ${token}`,
+         },
         body: JSON.stringify(payload),
       });
 

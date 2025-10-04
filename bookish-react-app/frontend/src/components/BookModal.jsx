@@ -13,6 +13,11 @@ export default function BookModal({ book, onClose, onShelfRefresh }) {
   const id = book?._id;
   const saved = Boolean(id);
   const mustBeSaved = () => alert("Add this book to your shelf first.");
+  
+  // Auth decleration
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user ? user.token : null;
+
 
   // --- review state ---
   const [reviewMode, setReviewMode] = useState(false);
@@ -51,7 +56,9 @@ export default function BookModal({ book, onClose, onShelfRefresh }) {
 
       const res = await fetch("/api/bookshelf", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", 
+          Authorization: `bearer ${token}`
+         },
         body: JSON.stringify(payload),
       });
 
@@ -82,7 +89,9 @@ export default function BookModal({ book, onClose, onShelfRefresh }) {
       setBusy(true);
       const res = await fetch(`/api/bookshelf/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", 
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify({ status }),
       });
       if (!res.ok) throw new Error(await res.text());
@@ -102,8 +111,13 @@ export default function BookModal({ book, onClose, onShelfRefresh }) {
     if (busy) return;
     try {
       setBusy(true);
-      const res = await fetch(`/api/bookshelf/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error(await res.text());
+      const res = await fetch(`/api/bookshelf/${id}`, {
+           method: "DELETE", 
+           headers: {
+            "Content-Type": "application/json", 
+            Authorization: `Bearer ${token}`
+           }
+          });      if (!res.ok) throw new Error(await res.text());
       setBooks((prev) => prev.filter((b) => b._id !== id));
       onClose?.();
     } catch (e) {
@@ -131,7 +145,9 @@ export default function BookModal({ book, onClose, onShelfRefresh }) {
       setBusy(true);
       const res = await fetch(`/api/bookshelf/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", 
+          Authorization: `Bearer ${token}`
+         },
         body: JSON.stringify({
           status: "Read",
           rating: { stars: Number(stars) || 0, review: reviewText || "" },

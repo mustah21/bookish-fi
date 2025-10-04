@@ -8,7 +8,9 @@ const {
     updateImage,
     deleteImage
 } = require('../controllers/imagesControllers')
+const auth = require('../middleware/auth');
 
+router.use(auth) 
 // GET /images
 router.get('/:bookId', getAllImages);
 

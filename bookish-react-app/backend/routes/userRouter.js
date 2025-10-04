@@ -9,7 +9,7 @@ const {
     updateUser,
     deleteUser,
 } = require('../controllers/userControllers');
-// const auth = require('../middleware/auth');
+const auth = require('../middleware/auth');
 
 //router.post('/', createUser);
 
@@ -19,7 +19,7 @@ router.post("/login", logIn);
 // signup route
 router.post("/signup", signUp);
 
-// router.use(auth) change after
+router.use(auth) 
 
 // Get all users
 router.get('/', getAllUsers);

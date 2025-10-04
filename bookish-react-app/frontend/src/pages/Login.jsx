@@ -2,7 +2,7 @@ import '../styles/global.css';
 import useLogin from '../hooks/useLogin';
 
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }) => {
     const { form,
             showPassword,
             setShowPassword,
@@ -10,7 +10,7 @@ const Login = () => {
             error, 
             handleChange,
             handleSubmit,
-    } = useLogin();
+    } = useLogin({ setIsAuthenticated });
 
 
   return (

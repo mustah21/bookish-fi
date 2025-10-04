@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-const useSignup = () => {
+const useSignup = ({setIsAuthenticated}) => {
 
     const [message, setMessage] = useState({ text: "", type: "" });
     const [submitted, setSubmitted] = useState(false);
@@ -48,11 +48,12 @@ const useSignup = () => {
             if (response.ok) {
                 const user = await response.json();
                 localStorage.setItem("user", JSON.stringify(user))
-                navigate('/mainPage')
+                setIsAuthenticated(true);
                 setMessage({ text: `Account created for ${form.username}!`, type: "success" });
                 setSubmitted(true); // hide form, show message
-
+                navigate('/mainPage')
             } else {
+                console.error("Wrong input by the user")
                 setMessage({ text: "Signup failed. Try again later.", type: "error" });
             }
         } catch {

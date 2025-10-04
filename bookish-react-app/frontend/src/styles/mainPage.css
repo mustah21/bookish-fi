@@ -1,42 +1,159 @@
-/* =========================================================
-   MAIN PAGE STYLES (clean merge)
-   - Fixed duplicate/conflicting blocks
-   - Corrected broken comments
-   - Keeps your shelf design
-   - Makes sideways title text show much more
-========================================================= */
+/*
+=============== 
+Variables
+===============
+*/
+
+:root {
+    --transition: all 0.3s linear;
+    --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    --background-color: #f8f4f4;
+    --color-1: #44624a;
+    --color-2: #8ba888;
+    --color-3: #c0cfb2;
+    --color-4: #f1ebe1;
+
+}
+
+
+
+/*
+=============== 
+Global Styles
+===============
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    line-height: 1.5;
+    font-size: 0.875rem;
+    background-color: var(--background-color);
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.25rem;
+}
+
+h4 {
+    font-size: 0.875rem;
+}
+
+
+
+@media screen and (min-width: 800px) {
+    h1 {
+        font-size: 4rem;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+    }
+
+    h3 {
+        font-size: 1.75rem;
+    }
+
+    h4 {
+        font-size: 1rem;
+    }
+
+    body {
+        font-size: 1rem;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        line-height: 1;
+    }
+}
+
 
 /* ==============================
    PAGE LAYOUT
 ============================== */
-.page-layout {
+
+.mainpage_mainlayout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.mainpage_page-layout {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-columns: 320px 1fr;
+  grid-template-rows: auto auto 1fr;
   grid-template-areas:
-    "search filters"
+    "search search"
+    "filters content"
     "bookshelf content";
   min-height: 100vh;
-  background: url("../img/main_page.jpg") center/cover no-repeat;
   padding: 1.5rem;
+  padding-top: 140px;
   gap: 1.5rem;
   font-family: 'Poppins', sans-serif;
   color: #333;
   position: relative;
+
+
+  max-width: 1400px; 
+  width: 100%;
+  margin: 0 auto;
 }
 
 /* ==============================
    SEARCH BAR (fixed, top-center)
 ============================== */
 .search-bar {
-  position: fixed;
-  top: 60px; /* lowered a bit for breathing room */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 60px; 
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 10;
   background: rgba(255, 255, 255, 0.9);
   padding: 0.5rem 0.8rem;
   border-radius: 12px;
@@ -86,13 +203,13 @@
    FILTERS (fixed, top-right)
 ============================== */
 .mainpage-filters {
-  position: fixed;
-  top: 60px;
-  right: 30px;
+  position: inline;
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  z-index: 1000;
+  align-items: left;
+  flex-direction: row;
+  gap: 1.2rem;
+  z-index: 100;
+  margin-bottom: 1rem;
 }
 
 .mainpage-filters button {
@@ -129,10 +246,13 @@
 ============================== */
 .bookshelf {
   grid-area: bookshelf;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
   align-self: start;
-  width: 120%;
-  background: rgba(69, 90, 57, 0.9);
+  width: 130%;
+  background: var(--color-1);
   padding: 1.4rem;
   border-radius: 14px;
   box-shadow: 0 4px 12px rgba(107, 22, 22, 0.18);
@@ -149,9 +269,8 @@
   margin-bottom: 1.4rem;
   font-size: 22px;
   font-weight: 700;
-  color: #000000;
+  color: var(--background-color);
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
-  font-style: italic;
 }
 
 .shelf-container {
@@ -174,7 +293,7 @@
 }
 
 .book-slot {
-  background: #e6d2c0;
+  background: var(--color-3);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
@@ -198,8 +317,8 @@
 
 .nav-btn {
   padding: 6px 12px;
-  background: #44624a;
-  color: white;
+  background: var(--color-2);
+  color: var(--color-4);
   border: none;
   border-radius: 8px;
   font-size: 13px;
@@ -208,7 +327,7 @@
 }
 
 .nav-btn:hover {
-  background: #2f3e2f;
+  background: var(--color-3);
 }
 
 .nav-btn:disabled {
@@ -218,6 +337,7 @@
 
 /* Inline add in slot */
 .inline-add-btn {
+  position: relative;
   width: 100%;
   height: 100%;
   border: none;
@@ -236,7 +356,6 @@
 
 /* Floating add button */
 .floating-add-btn {
-  position: fixed;
   bottom: 44px;
   right: 25px;
   background: #44624a;
@@ -265,20 +384,20 @@
   background: rgba(0, 0, 0, .45);
   display: grid;
   place-items: center;
-  z-index: 4000;
+  z-index: 998;
 }
 
 .popup {
   background: #fff;
   position: fixed;
   top: 200px;
-  left: 750px;
-  padding: 1.6rem;
+  left: 500px;
+  padding: 2.8rem;
   border-radius: 14px;
-  width: 340px;
+  width: 400px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   animation: popupFade 0.3s ease-out;
-  z-index: 4001;
+  z-index: 999;
 }
 
 .popup h3 {

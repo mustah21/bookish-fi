@@ -8,9 +8,17 @@ const IMAGES_BASE = "/api/bookshelfs/images";
 const MAX_UPLOAD_BYTES = 10000 * 1024;
 
 async function http(method, url, body) {
+  // Auth decleration
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user ? user.token : null;
+
+
   const res = await fetch(url, {
     method,
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
     body: body ? JSON.stringify(body) : undefined,
   });
   const text = await res.text();
@@ -33,8 +41,8 @@ const api = {
       http(
         "POST", `${NOTES_BASE}/${bookId}`, data
       ),
-    
-    
+
+
     update: (bookId, id, data) => http("PUT", `${NOTES_BASE}/${bookId}/${id}`, data),
     remove: (bookId, id) => http("DELETE", `${NOTES_BASE}/${bookId}/${id}`),
   },
@@ -65,12 +73,21 @@ export default function Notes() {
   const [renameBusy, setRenameBusy] = useState(new Set());
   const [viewImage, setViewImage] = useState(null);
 
+  // Auth decleration
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user ? user.token : null;
+
   useEffect(() => {
     (async () => {
       for (const p of [`/api/bookshelfs/${bookId}`, `/api/bookshelf/${bookId}`, `/api/book/${bookId}`]) {
         try {
-          const r = await fetch(p);
-          if (r.ok) {
+        const r = await fetch(p, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+          if (r.ok) { 
             const b = await r.json();
             if (b?.title) {
               setBook(b);
@@ -80,7 +97,7 @@ export default function Notes() {
         } catch { }
       }
     })();
-  }, [bookId]);
+  }, [token, bookId]);
 
   useEffect(() => {
     (async () => {
@@ -282,7 +299,7 @@ export default function Notes() {
   return (
     <div className="notes-page">
       <div className="notes-left">
-        <h1>Notes for {book?.title || "This Book"}</h1>
+        <h2>Notes for {book?.title || "This Book"}</h2>
         <input
           className="note-search"
           placeholder="Search notes..."
@@ -345,7 +362,7 @@ export default function Notes() {
                     onClick={() => deleteImage(id)}
                     disabled={busy}
                   >
-                     Delete
+                    Delete
                   </button>
                 </div>
               </div>
@@ -353,11 +370,11 @@ export default function Notes() {
           })}
         </div>
         <button className="upload-btn" onClick={() => setShowImageModal(true)}>
-           Add picture
+          Add picture
         </button>
       </div>
 
-      
+
       {showNoteModal && (
         <div className="modal-overlay" onClick={() => setShowNoteModal(false)}>
           <div className="modal note-editor" onClick={(e) => e.stopPropagation()}>
@@ -415,7 +432,7 @@ export default function Notes() {
         </div>
       )}
 
-     
+
       {viewImage && (
         <div className="modal-overlay" onClick={() => setViewImage(null)}>
           <div className="modal image-viewer" onClick={(e) => e.stopPropagation()}>

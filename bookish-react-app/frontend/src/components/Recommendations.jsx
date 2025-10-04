@@ -25,6 +25,10 @@ export default function Recommendation() {
   const [err, setErr] = useState("");
   const [addingId, setAddingId] = useState("");
 
+  // Auth decleration
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user ? user.token : null;
+
   // track which recs are already added (or get added)
   const [addedKeys, setAddedKeys] = useState(() => {
     const s = new Set();
@@ -54,7 +58,9 @@ export default function Recommendation() {
         setErr("");
         const res = await fetch(SEARCH_ENDPOINT, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", 
+            Authorization: `Bearer ${token}`, 
+           },
           body: JSON.stringify({ genre, pageAmount, yearPublished }),
         });
         if (!res.ok) throw new Error(await res.text());
@@ -72,7 +78,7 @@ export default function Recommendation() {
       }
     })();
     return () => { alive = false; };
-  }, [genre, pageAmount, yearPublished]);
+  }, [genre, pageAmount, yearPublished, token]);
 
   const handleRefresh = () => {
     if (!allRecs.length) return;
@@ -104,7 +110,9 @@ export default function Recommendation() {
 
       const res = await fetch("/api/bookshelf", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", 
+          Authorization: `Bearer ${token}`,
+         },
         body: JSON.stringify(payload),
       });
 

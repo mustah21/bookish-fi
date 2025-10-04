@@ -9,6 +9,9 @@ const {
     deleteNote
 } = require("../controllers/notesControllers")
 
+const auth = require('../middleware/auth');
+
+router.use(auth) 
 // GET /notes
 router.get('/:bookId', getAllNotes)
 

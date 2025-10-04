@@ -1,22 +1,25 @@
 /* page wrapper — support both class names */
 .recommendation-page,
 .recommendations-page {
+  display: flex;
+  flex-direction: column;
   padding: 2rem 1rem;
   background-color: #f8f9fa;
 }
 
 /* header stays the same */
 .recommendation-header {
-  padding: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
   text-align: center;
-  max-width: 800px;
   margin: 0 auto 3rem auto;
 }
 
 .recommendation-header h1 {
   font-size: 2.8rem;
   color: #275546;
-  /* Dark green */
   margin-bottom: 1rem;
 }
 
@@ -25,7 +28,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  /* was 'unwrap' (invalid) */
   gap: 20px;
   padding: 20px;
   justify-content: center;
@@ -142,7 +144,7 @@
 /* refresh button (optional) */
 .rec-refresh-btn {
   border: 1px solid rgba(0, 0, 0, .12);
-  padding: .5rem .9rem;
+  padding: 1rem;
   border-radius: 8px;
   background: transparent;
   cursor: pointer;

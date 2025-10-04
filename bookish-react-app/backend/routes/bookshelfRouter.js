@@ -8,6 +8,9 @@ const {
   deleteBookshelf
 } = require("../controllers/bookShelfControllers");
 
+const auth = require('../middleware/auth');
+
+router.use(auth) 
 router.get("/", getAllBookshelfs);
 router.post("/", createBookshelf);
 router.get("/:bookshelfId", getBookshelfById);
