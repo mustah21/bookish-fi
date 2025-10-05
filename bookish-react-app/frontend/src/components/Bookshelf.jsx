@@ -31,13 +31,13 @@ export default function Bookshelf() {
     genre: "",
   });
 
-  // Review popup (unchanged behavior)
+  
   const [reviewOpen, setReviewOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
 
   const slotsPerPage = 12;
 
-  // ---------- Load shelf ----------
+  
   const refreshShelf = async () => {
     try {
         const res = await fetch("/api/bookshelf", {
@@ -56,10 +56,10 @@ export default function Bookshelf() {
 
   useEffect(() => {
     refreshShelf();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [token]);
 
-  // ---------- Filters ----------
+  
   const normStatus = (s = "") => {
     const up = String(s).trim().toUpperCase();
     if (up === "TO BE READ") return "TBR";
@@ -80,7 +80,7 @@ export default function Bookshelf() {
   useEffect(() => {
     const maxPage = Math.max(0, Math.ceil(filtered.length / slotsPerPage) - 1);
     if (page > maxPage) setPage(0);
-  }, [filter, filtered.length]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [filter, filtered.length]); 
 
   const start = page * slotsPerPage;
   const current = filtered.slice(start, start + slotsPerPage);
@@ -97,7 +97,7 @@ export default function Bookshelf() {
     setReviewOpen(true);
   };
 
-  // ---------- Right panel form handlers ----------
+  
   const onChange = (e) => {
     const { name, value } = e.target;
     setForm((p) => ({ ...p, [name]: value }));
@@ -143,7 +143,6 @@ export default function Bookshelf() {
         booktheme,
         genre,
         published: publishedNum,
-        // bookshelf extras (backend may ignore if not in schema)
         status: "TBR",
         notes: [],
         images: [],
@@ -161,7 +160,7 @@ export default function Bookshelf() {
       if (res.status === 409) {
         setMsg("Already in your shelf ✓");
         await refreshShelf();
-        // keep the panel open so user sees it; optional auto-close:
+        
         setTimeout(() => {
           setOpenForm(false);
           clearForm();
@@ -207,7 +206,7 @@ export default function Bookshelf() {
 
   return (
     <div>
-      {/* Filters */}
+      
       <div className="mainpage-filters">
         <button className={filter === "ALL" ? "active" : ""} onClick={() => setFilter("ALL")}>📚 All</button>
         <button className={filter === "TBR" ? "active" : ""} onClick={() => setFilter("TBR")}>🖊️ TBR</button>
@@ -216,7 +215,7 @@ export default function Bookshelf() {
         <button className={filter === "Notes" ? "active" : ""} onClick={() => setFilter("Notes")}>📝 Notes</button>
       </div>
 
-      {/* Shelf */}
+    
       <div className="bookshelf">
         <h2 className="shelf-title">Bookshelf</h2>
         <div className="shelf-container">
@@ -240,7 +239,7 @@ export default function Bookshelf() {
         </div>
       </div>
 
-      {/* ===== Right-side Add Book button ===== */}
+      
       <button
         onClick={() => setOpenForm(true)}
         disabled={busy}
@@ -263,7 +262,7 @@ export default function Bookshelf() {
         ➕ Add Book
       </button>
 
-      {/* ===== Right-side slide-in form panel (no overlay) ===== */}
+      
       {openForm && (
         <div
           style={{
@@ -417,7 +416,7 @@ export default function Bookshelf() {
         </div>
       )}
 
-      {/* Review popup (unchanged) */}
+      
       {reviewOpen && (
         <div className="popup-overlay" onClick={closeReview}>
           <div className="popup" onClick={(e) => e.stopPropagation()}>
