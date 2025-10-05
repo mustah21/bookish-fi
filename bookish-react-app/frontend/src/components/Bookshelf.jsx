@@ -1,5 +1,4 @@
-// src/components/Bookshelf.jsx
-// Right-side Add Book button -> slide-in form panel (no floating modal)
+
 import { useContext, useEffect, useMemo, useState } from "react";
 import { BookContext } from "../components/BookContext";
 import BookCard from "./BookCard";
@@ -12,12 +11,12 @@ export default function Bookshelf() {
   const [page, setPage] = useState(0);
   const [filter, setFilter] = useState("ALL");
 
-  // Right panel form state (no popup)
+  
   const [openForm, setOpenForm] = useState(false);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
 
-  // Auth decleration
+  
   const user = JSON.parse(localStorage.getItem("user"));
   const token = user ? user.token : null;
 
