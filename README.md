@@ -70,13 +70,8 @@ bookish-checking/
 
 This project was developed using Agile methodologies with regular sprints:
 
-- **Sprint 1**: Initial planning, design, and wireframes ([View Figma Design](https://www.figma.com/design/5VrCmmL3c00uBd5yAA7gIs/Untitled?node-id=52-9735&m=draw))
-- **Sprint 2**: Feature development and implementation ([View Presentation](https://www.canva.com/design/DAGzDgpf86o/pV1gUs5hQyvmO5xAc8Bkpg/edit))
-
-### Project Management
-
-- **Trello Board**: [View Project Board](https://trello.com/b/PYQ9cKc5/bookishfi)
-- **Design**: [Figma Wireframes](https://www.figma.com/design/5VrCmmL3c00uBd5yAA7gIs/Untitled?node-id=52-9735&m=draw)
+- **Sprint 1**: Initial planning, design, and wireframes
+- **Sprint 2**: Feature development and implementation 
 
 ## 🧪 Testing
 
