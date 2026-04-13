@@ -127,10 +127,4 @@ This project is available for educational purposes.
 - Project planning with Figma and Trello
 - Community feedback and contributions
 
-## 📧 Contact
-
-For questions or feedback, please open an issue on GitHub.
-
----
-
 **Note**: This project is under active development. Features and documentation may change as the project evolves.
